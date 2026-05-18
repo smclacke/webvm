@@ -15,5 +15,5 @@ WORKDIR /home/user/
 # We set env, as this gets extracted by Webvm. This is optional.
 ENV HOME="/home/user" TERM="xterm" USER="user" SHELL="/bin/bash" EDITOR="vim" LANG="en_US.UTF-8" LC_ALL="C"
 RUN echo 'root:password' | chpasswd
-RUN echo "build-2026-05-18-test1" > /etc/webvm-build-id
+RUN cat > /etc/pam.d/su <<'EOF'\n# Minimal PAM for container/browser runtime\nauth       sufficient pam_rootok.so\nauth       required   pam_unix.so nullok\naccount    required   pam_permit.so\nsession    required   pam_permit.so\nEOF
 CMD [ "/bin/bash" ]
